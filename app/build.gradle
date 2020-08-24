@@ -33,6 +33,10 @@ android {
     packagingOptions {
         exclude 'META-INF/*.kotlin_module'
     }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
 }
 
 dependencies {
