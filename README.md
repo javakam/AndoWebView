@@ -1,5 +1,7 @@
 # AndoWebview
 
+<a href="https://bintray.com/javakam/maven/webview/1.0.0/link"><img src="https://api.bintray.com/packages/javakam/maven/webview/images/download.svg?version=1.0.0"/></a>
+
 - 🚀 **GitHub**👉 <https://github.com/javakam/AndoWebView>
 - 🚀 修复了原生`WebView`的`N`多`Bug`的 `NestedScrollWebView` + 进度显示`IndicatorView`
 - 🚀 `WebIndicatorView` ,简单的顶部进度显示条
