@@ -2,11 +2,79 @@
 
 - 🚀 **GitHub**👉 <https://github.com/javakam/AndoWebView>
 - 🚀 修复了原生`WebView`的`N`多`Bug`的 `NestedScrollWebView` + 进度显示`IndicatorView`
-- 🚀 `NestedScrollWebView` ,修复了`Android 5.0 & 5.1`打开`WebView`闪退问题; 修复了嵌套在`NestedScrollView`中高度异常问题
 - 🚀 `WebIndicatorView` ,简单的顶部进度显示条
 - 🚀 `WebViewUtils` ,`WebView`通用配置
+- 🚀 `NestedScrollWebView` ,修复了`Android 5.0 & 5.1`打开`WebView`闪退问题; 修复了嵌套在`NestedScrollView`中高度异常问题;
+ 修复了`Android WebView Bug : Resources$NotFoundException:String resource ID #0x2040003` ,详细介绍👉 <https://juejin.im/post/6844904179350110216>
 
-- 测试用`Url`
+
+## 引入
+```groovy
+implementation 'ando.webview:webview:1.0.0'
+```
+
+
+## 使用
+-  1. 布局文件中引入(建议动态创建`NestedScrollWebView`) :
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <ando.webview.indicator.WebIndicatorView
+        android:id="@+id/webViewIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="3dp" />
+
+    <ando.webview.core.NestedScrollWebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
+```    
+    
+-  2.Activity/Fragment
+
+简单方式:
+```kotlin
+fun letsGoSimplify() {
+    WebViewUtils.initWebView(this, mWebView, mWebViewIndicator)
+    mWebView.loadUrl(url)
+}
+```
+自定义:
+```kotlin
+fun letsGoCustom() {
+    WebViewUtils.initWebView(this, mWebView)
+    mWebView.webViewClient = CustomWebClient(this)
+    val controller: WebIndicatorController = WebIndicatorController.getInstance().injectIndicator( mWebViewIndicator)
+    mWebView.webChromeClient = CustomWebChromeClient(this, controller)
+    mWebView.loadUrl(url)
+    //mWebView.loadDataWithBaseURL(null, url, "text/html", "utf-8", null)
+}
+```
+🍎 此外, 还要注意返回事件和防止泄露 :
+```kotlin
+//返回键处理
+override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+    return WebViewUtils.performKeyDown(this, mWebView, keyCode, event)
+}
+
+//及时销毁防止泄露
+override fun onDestroy() {
+    super.onDestroy()
+    mWebView.clearHistory()
+    mWebView.removeAllViews()
+}
+```
+
+## 测试用`Url`
 
 ```
 https://fhy.bgy.com.cn/fhyH5/
@@ -19,4 +87,4 @@ https://map.qq.com/m/nearby/search/centerX=115.9685142526&centerY=40.4419729170&
 
 ```
 
-- 相关: [AgentWeb](https://github.com/Justson/AgentWeb)
+## 相关: [AgentWeb](https://github.com/Justson/AgentWeb)

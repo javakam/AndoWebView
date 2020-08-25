@@ -32,6 +32,12 @@ class MainActivity : AppCompatActivity() {
         return WebViewUtils.performKeyDown(this, mWebView, keyCode, event)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mWebView.clearHistory()
+        mWebView.removeAllViews()
+    }
+
     private fun letsGoSimplify() {
         WebViewUtils.initWebView(this, mWebView, mWebViewIndicator)
         mWebView.loadUrl(url)
@@ -42,13 +48,10 @@ class MainActivity : AppCompatActivity() {
         mWebView.webViewClient = CustomWebClient(this)
 
         val controller: WebIndicatorController =
-            WebIndicatorController.getInstance().injectIndicator(
-                mWebViewIndicator
-            )
+            WebIndicatorController.getInstance().injectIndicator(mWebViewIndicator)
         mWebView.webChromeClient = CustomWebChromeClient(this, controller)
 
         mWebView.loadUrl(url)
         //mWebView.loadDataWithBaseURL(null, url, "text/html", "utf-8", null)
     }
-
 }

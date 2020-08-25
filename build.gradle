@@ -27,17 +27,13 @@ allprojects {
         maven { url 'https://dl.bintray.com/javakam/maven' }
     }
 
-    tasks.withType(Javadoc) {
+    tasks.withType(Javadoc).all {
         options {
             encoding "UTF-8"
             charSet 'UTF-8'
             links "http://docs.oracle.com/javase/7/docs/api"
         }
-    }
-    gradle.projectsEvaluated {
-        tasks.withType(JavaCompile) {
-            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
-        }
+        enabled = false
     }
 }
 
