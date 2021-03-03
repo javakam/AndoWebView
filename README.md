@@ -15,7 +15,7 @@ implementation 'ando.webview:webview:2.0.0'
 
 ### Usage
 
--  1. 布局文件中引入(建议动态创建`NestedScrollWebView`) :
+1. 布局文件中引入(建议动态创建`NestedScrollWebView`) :
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -39,7 +39,7 @@ implementation 'ando.webview:webview:2.0.0'
 </LinearLayout>
 ```    
     
--  2.Activity/Fragment
+2. Activity/Fragment
 
 简单方式:
 ```kotlin
