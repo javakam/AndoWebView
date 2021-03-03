@@ -1,22 +1,21 @@
 # AndoWebview
 
-<a href="https://bintray.com/javakam/maven/webview/1.0.0/link"><img src="https://api.bintray.com/packages/javakam/maven/webview/images/download.svg?version=1.0.0"/></a>
+- 🚀 修复了原生`WebView`的一些`Bug`
+- 🚀 `NestedScrollWebView` + 顶部进度显示`Indicator`
+- 🚀 `WebViewUtils`, `WebView`通用配置
+- 🚀 `NestedScrollWebView` ,修复了`Android 5.0/5.1`打开`WebView`闪退问题; 修复了嵌套在`NestedScrollView`中高度异常问题;
+- 🚀 修复了`Android WebView Bug : Resources$NotFoundException:String resource ID #0x2040003`, 详细介绍👉 <https://juejin.im/post/6844904179350110216>
 
-- 🚀 **GitHub**👉 <https://github.com/javakam/AndoWebView>
-- 🚀 修复了原生`WebView`的`N`多`Bug`的 `NestedScrollWebView` + 进度显示`IndicatorView`
-- 🚀 `WebIndicatorView` ,简单的顶部进度显示条
-- 🚀 `WebViewUtils` ,`WebView`通用配置
-- 🚀 `NestedScrollWebView` ,修复了`Android 5.0 & 5.1`打开`WebView`闪退问题; 修复了嵌套在`NestedScrollView`中高度异常问题;
- 修复了`Android WebView Bug : Resources$NotFoundException:String resource ID #0x2040003` ,详细介绍👉 <https://juejin.im/post/6844904179350110216>
-
-
-## 引入
+### Gradle
 ```groovy
-implementation 'ando.webview:webview:1.0.0'
+maven { url "https://dl.bintray.com/javakam/maven" }
+
+implementation 'ando.webview:webview:2.0.0'
 ```
 
+### Usage
+#### 1.WebView Basic Usage
 
-## 使用
 -  1. 布局文件中引入(建议动态创建`NestedScrollWebView`) :
 
 ```xml
@@ -29,7 +28,7 @@ implementation 'ando.webview:webview:1.0.0'
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <ando.webview.indicator.WebIndicatorView
+    <ando.webview.indicator.WebIndicator
         android:id="@+id/webViewIndicator"
         android:layout_width="match_parent"
         android:layout_height="3dp" />
@@ -52,10 +51,10 @@ fun letsGoSimplify() {
 ```
 自定义:
 ```kotlin
-fun letsGoCustom() {
+private fun letsGoCustom() {
     WebViewUtils.initWebView(this, mWebView)
     mWebView.webViewClient = CustomWebClient(this)
-    val controller: WebIndicatorController = WebIndicatorController.getInstance().injectIndicator( mWebViewIndicator)
+    val controller: WebIndicatorController = WebIndicatorController().inject(mWebViewIndicator)
     mWebView.webChromeClient = CustomWebChromeClient(this, controller)
     mWebView.loadUrl(url)
     //mWebView.loadDataWithBaseURL(null, url, "text/html", "utf-8", null)
@@ -75,9 +74,11 @@ override fun onDestroy() {
     mWebView.removeAllViews()
 }
 ```
+#### 2.WebView + Video
 
-## 测试用`Url`
+#### 3.WebView + CoordinatorLayout
 
+### `Url` for testing
 ```
 https://fhy.bgy.com.cn/fhyH5/
 
@@ -86,7 +87,7 @@ https://3gimg.qq.com/lightmap/v1/marker/?marker=coord:40.4419729170,115.96851425
 qqmap://map/nearby?coord=40.4419729170,115.9685142526&placeName=%E5%BB%B6%E5%BA%86%E7%A2%A7%E6%A1%82%E5%9B%AD%E4%BA%AC%E6%BA%90%E8%91%97
 
 https://map.qq.com/m/nearby/search/centerX=115.9685142526&centerY=40.4419729170&placename=%E5%BB%B6%E5%BA%86%E7%A2%A7%E6%A1%82%E5%9B%AD%E4%BA%AC%E6%BA%90%E8%91%97&refer=comMarker&key=NRFBZ-673AV-HUTPI-UCYIF-4LV4S-CLBJA 
-
 ```
 
-## 相关: [AgentWeb](https://github.com/Justson/AgentWeb)
+### Thanks
+<https://github.com/Justson/AgentWeb>

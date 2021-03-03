@@ -3,20 +3,20 @@ package ando.webview.indicator;
 import android.webkit.WebView;
 
 public class WebIndicatorController {
+
     private IWebIndicator indicator;
 
     public void progress(WebView v, int newProgress) {
         if (newProgress == 0) {
             reset();
         } else if (newProgress > 0 && newProgress <= 10) {
-            showIndicator();
+            show();
         } else if (newProgress > 10 && newProgress < 95) {
             setProgress(newProgress);
         } else {
             setProgress(newProgress);
             finish();
         }
-
     }
 
     public void reset() {
@@ -37,17 +37,13 @@ public class WebIndicatorController {
         }
     }
 
-    public void showIndicator() {
+    public void show() {
         if (indicator != null) {
             indicator.show();
         }
     }
 
-    public static WebIndicatorController getInstance() {
-        return new WebIndicatorController();
-    }
-
-    public WebIndicatorController injectIndicator(IWebIndicator indicator) {
+    public WebIndicatorController inject(IWebIndicator indicator) {
         this.indicator = indicator;
         return this;
     }

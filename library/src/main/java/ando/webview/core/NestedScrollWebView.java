@@ -1,5 +1,6 @@
 package ando.webview.core;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -78,6 +79,7 @@ public class NestedScrollWebView extends WebView implements NestedScrollingChild
         setNestedScrollingEnabled(false);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         boolean result = false;

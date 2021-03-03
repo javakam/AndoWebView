@@ -16,7 +16,7 @@ import android.view.animation.LinearInterpolator;
 
 import androidx.annotation.Nullable;
 
-public class WebIndicatorView extends AbsWebIndicatorView {
+public class WebIndicator extends BaseWebIndicator {
     /**
      * 进度条颜色
      */
@@ -70,15 +70,15 @@ public class WebIndicatorView extends AbsWebIndicatorView {
      */
     public int mWebIndicatorDefaultHeight = 3;
 
-    public WebIndicatorView(Context context) {
+    public WebIndicator(Context context) {
         this(context, null);
     }
 
-    public WebIndicatorView(Context context, @Nullable AttributeSet attrs) {
+    public WebIndicator(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public WebIndicatorView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public WebIndicator(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
@@ -130,7 +130,7 @@ public class WebIndicatorView extends AbsWebIndicatorView {
     public void show() {
         if (getVisibility() == GONE) {
             this.setVisibility(VISIBLE);
-            mCurrentProgress = 0f;
+            mCurrentProgress = 0F;
             startAnim(false);
         }
     }
@@ -145,7 +145,7 @@ public class WebIndicatorView extends AbsWebIndicatorView {
             mCurrentMaxUniformSpeedDuration = MAX_UNIFORM_SPEED_DURATION;
             mCurrentDoEndAnimationDuration = MAX_DECELERATE_SPEED_DURATION;
         } else {
-            float rate = this.mTargetWidth / (float) screenWidth;//取比值
+            float rate = this.mTargetWidth / (float) screenWidth;//取比值 (Take the ratio)
             mCurrentMaxUniformSpeedDuration = (int) (MAX_UNIFORM_SPEED_DURATION * rate);
             mCurrentMaxDecelerateSpeedDuration = (int) (MAX_DECELERATE_SPEED_DURATION * rate);
             mCurrentDoEndAnimationDuration = (int) (DO_END_ANIMATION_DURATION * rate);
@@ -174,11 +174,11 @@ public class WebIndicatorView extends AbsWebIndicatorView {
         if (mAnimator != null && mAnimator.isStarted()) {
             mAnimator.cancel();
         }
-        mCurrentProgress = (mCurrentProgress == 0f ? 0.00000001f : mCurrentProgress);
+        mCurrentProgress = (mCurrentProgress == 0F ? 0.00000001F : mCurrentProgress);
         if (!isFinished) {
             AnimatorSet animatorSet = new AnimatorSet();
 
-            float p1 = v * 0.60f;
+            float p1 = v * 0.60F;
             float p2 = v;
             ValueAnimator animator = ValueAnimator.ofFloat(mCurrentProgress, p1);
             ValueAnimator animator0 = ValueAnimator.ofFloat(p1, p2);
@@ -200,7 +200,7 @@ public class WebIndicatorView extends AbsWebIndicatorView {
             ValueAnimator segment95Animator = null;
             if (mCurrentProgress < 95F) {
                 segment95Animator = ValueAnimator.ofFloat(mCurrentProgress, 95);
-                float residue = 1f - mCurrentProgress / 100F - 0.05F;
+                float residue = 1F - mCurrentProgress / 100F - 0.05F;
                 segment95Animator.setDuration((long) (residue * mCurrentMaxDecelerateSpeedDuration));
                 segment95Animator.setInterpolator(new DecelerateInterpolator());
                 segment95Animator.addUpdateListener(mAnimatorUpdateListener);
@@ -227,8 +227,8 @@ public class WebIndicatorView extends AbsWebIndicatorView {
     private final ValueAnimator.AnimatorUpdateListener mAnimatorUpdateListener = new ValueAnimator.AnimatorUpdateListener() {
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
-            WebIndicatorView.this.mCurrentProgress = (float) animation.getAnimatedValue();
-            WebIndicatorView.this.invalidate();
+            WebIndicator.this.mCurrentProgress = (float) animation.getAnimatedValue();
+            WebIndicator.this.invalidate();
         }
     };
 

@@ -7,22 +7,22 @@ import android.widget.FrameLayout;
 import androidx.annotation.Nullable;
 
 /**
- * # AbsWebIndicatorView
+ * # BaseWebIndicator
  *
  * @author javakam
  * @date 2020/8/24 15:43
  */
-public abstract class AbsWebIndicatorView extends FrameLayout implements IWebIndicator {
+public abstract class BaseWebIndicator extends FrameLayout implements IWebIndicator {
 
-    public AbsWebIndicatorView(Context context) {
+    public BaseWebIndicator(Context context) {
         super(context);
     }
 
-    public AbsWebIndicatorView(Context context, @Nullable AttributeSet attrs) {
+    public BaseWebIndicator(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public AbsWebIndicatorView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public BaseWebIndicator(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -41,4 +41,5 @@ public abstract class AbsWebIndicatorView extends FrameLayout implements IWebInd
     @Override
     public void hide() {
     }
+
 }

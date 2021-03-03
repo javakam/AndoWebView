@@ -11,10 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
 /**
- * Title:ActionActivity
- * <p>
- * Description:
- * </p>
+ * # ActionActivity
+ *
  * @author javakam
  * @date 2020/8/24 15:51
  */

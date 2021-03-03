@@ -5,11 +5,13 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
@@ -25,15 +27,15 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import ando.webview.indicator.WebIndicator;
 import ando.webview.indicator.WebIndicatorController;
-import ando.webview.indicator.WebIndicatorView;
 
 import static androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
 
 /**
- * WebView 配置
+ * # WebView Config
  *
- * @author majavakam
+ * @author javakam
  * @date 2019-05-20 16:48:25
  */
 public class WebViewUtils {
@@ -46,12 +48,12 @@ public class WebViewUtils {
         initWebView(fragment.getActivity(), webview, null);
     }
 
-    public static void initWebView(Fragment fragment, WebView webView, WebIndicatorView indicator) {
+    public static void initWebView(Fragment fragment, WebView webView, WebIndicator indicator) {
         initWebView(fragment.getActivity(), webView, indicator);
     }
 
     @SuppressLint({"ObsoleteSdkInt", "SetJavaScriptEnabled"})
-    public static void initWebView(Activity activity, WebView webView, WebIndicatorView indicator) {
+    public static void initWebView(Activity activity, WebView webView, WebIndicator indicator) {
         if (activity == null || webView == null || activity.isFinishing()) {
             return;
         }
@@ -117,13 +119,20 @@ public class WebViewUtils {
         //缓存文件最大值
         //noinspection deprecation
         settings.setAppCacheMaxSize(Long.MAX_VALUE);
-//        mWebSettings.setUserAgentString(mWebSettings
-//                .getUserAgentString()
-//                .concat(USERAGENT_AGENTWEB)
-//                .concat(USERAGENT_UC)
-//        );
 
-        //Log.i("123", "UserAgentString : " + settings.getUserAgentString());
+        //设置是否打开 WebView 表单数据的保存功能
+        settings.setSaveFormData(true);
+        //设置 WebView 的默认 userAgent 字符串
+        settings.setUserAgentString("");
+        // 支持PC上的Chrome调试WebView，具体方法请百度
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // 只支持Debug模式下调试
+            if (0 != (webView.getContext().getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE)) {
+                WebView.setWebContentsDebuggingEnabled(true);
+            }
+        }
+
+        Log.i("123", "UserAgentString : " + settings.getUserAgentString());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             // 安卓9.0后不允许多进程使用同一个数据目录，需设置前缀来区分
             // 参阅 https://blog.csdn.net/lvshuchangyin/article/details/89446629
@@ -140,14 +149,15 @@ public class WebViewUtils {
         webView.setWebViewClient(new CustomWebClient(activity));
         //WebChromeClient
         if (indicator != null) {
-            webView.setWebChromeClient(new CustomWebChromeClient(activity, WebIndicatorController.getInstance().injectIndicator(indicator)));
+            //WebIndicatorController
+            webView.setWebChromeClient(new CustomWebChromeClient(activity, new WebIndicatorController().inject(indicator)));
         }
 
     }
 
     /**
      * WebView 嵌套在 ScrollView 中崩溃的问题, 关闭硬件加速
-     *
+     * <p>
      * https://my.oschina.net/onlykc/blog/2050590
      */
     private static void fixAndroidLollipop(WebView webView) {
@@ -161,6 +171,16 @@ public class WebViewUtils {
             if (webView != null && webView.canGoBack()) {
                 webView.goBack();
                 return true;
+            } else {
+                if (context instanceof Activity) {
+                    ((Activity) context).onBackPressed();
+                } else if (context instanceof Fragment) {
+                    final Activity activity = ((Fragment) context).getActivity();
+                    if (activity != null) {
+                        activity.onBackPressed();
+                    }
+                }
+                return false;
             }
         }
         if (context instanceof Activity) {
@@ -204,7 +224,7 @@ public class WebViewUtils {
      *      val sss =
      *              "<p><script type='text/javascript' " +
      *              "  src='http://vd.zqrb.cn/admin/getvod/getvideo?key=b99dd7e5cfc1dadbb486326c68c8eb42&videoId=098ae9c0336f44f7b0990ea8433f45ff&isRePlay=1&isautoplay=1&id=358'> " +
-     *              "</script></p><p>（策划 证券日报音视频中心）</p>"
+     *              "</script></p><p>（策划 XXX音视频中心）</p>"
      *      mWebView.loadUrl(sss)
      *
      *      mWebView.loadDataWithBaseURL("", sss, "text/html", "UTF-8", null)

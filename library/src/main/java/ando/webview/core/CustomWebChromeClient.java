@@ -36,7 +36,7 @@ public class CustomWebChromeClient extends WebChromeClient {
      */
     private final WeakReference<Activity> mActivityWeakReference;
 
-    private final WebIndicatorController mIndicatorHandler;
+    private final WebIndicatorController mIndicatorController;
     /**
      * Web端触发的定位 mOrigin
      */
@@ -50,16 +50,16 @@ public class CustomWebChromeClient extends WebChromeClient {
      */
     public static final int FROM_CODE_INTENTION_LOCATION = 0x16;
 
-    public CustomWebChromeClient(Activity activity, WebIndicatorController indicatorHandler) {
+    public CustomWebChromeClient(Activity activity, WebIndicatorController controller) {
         this.mActivityWeakReference = new WeakReference<Activity>(activity);
-        this.mIndicatorHandler = indicatorHandler;
+        this.mIndicatorController = controller;
     }
 
     @Override
     public void onProgressChanged(WebView view, int newProgress) {
         super.onProgressChanged(view, newProgress);
-        if (mIndicatorHandler != null) {
-            mIndicatorHandler.progress(view, newProgress);
+        if (mIndicatorController != null) {
+            mIndicatorController.progress(view, newProgress);
         }
     }
 

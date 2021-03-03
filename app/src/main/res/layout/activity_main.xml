@@ -4,17 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:paddingTop="45dp"
+    android:paddingBottom="45dp"
     tools:context=".MainActivity">
 
-    <ando.webview.indicator.WebIndicatorView
-        android:id="@+id/webViewIndicator"
-        android:layout_width="match_parent"
-        android:layout_height="3dp" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="fun0"
+        android:text="WebView Basic"
+        android:textAllCaps="false"
+        android:textAppearance="?android:attr/textAppearance" />
 
-    <ando.webview.core.NestedScrollWebView
-        android:id="@+id/webView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="fun1"
+        android:text="WebView Video"
+        android:textAllCaps="false"
+        android:textAppearance="?android:attr/textAppearance" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="fun2"
+        android:text="WebView CoordinatorLayout"
+        android:textAllCaps="false" />
+
 
 </LinearLayout>
