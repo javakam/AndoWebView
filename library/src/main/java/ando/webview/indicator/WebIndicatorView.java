@@ -80,10 +80,10 @@ public class WebIndicatorView extends AbsWebIndicatorView {
 
     public WebIndicatorView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, defStyleAttr);
+        init(context);
     }
 
-    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+    private void init(Context context) {
         mPaint = new Paint();
         mColor = Color.parseColor("#03DAC5");
         mPaint.setAntiAlias(true);
@@ -91,21 +91,14 @@ public class WebIndicatorView extends AbsWebIndicatorView {
         mPaint.setDither(true);
         mPaint.setStrokeCap(Paint.Cap.SQUARE);
         mTargetWidth = context.getResources().getDisplayMetrics().widthPixels;
-        mWebIndicatorDefaultHeight = dp2px(context, 3);
-    }
 
-    private int dp2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
+        mWebIndicatorDefaultHeight = (int) (3 * scale + 0.5f);
     }
 
     public void setColor(int color) {
         this.mColor = color;
         mPaint.setColor(color);
-    }
-
-    public void setColor(String color) {
-        this.setColor(Color.parseColor(color));
     }
 
     @Override
@@ -143,8 +136,8 @@ public class WebIndicatorView extends AbsWebIndicatorView {
     }
 
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
+    protected void onSizeChanged(int w, int h, int oldWidth, int oldHeight) {
+        super.onSizeChanged(w, h, oldWidth, oldHeight);
         this.mTargetWidth = getMeasuredWidth();
         int screenWidth = getContext().getResources().getDisplayMetrics().widthPixels;
         if (mTargetWidth >= screenWidth) {
@@ -163,7 +156,7 @@ public class WebIndicatorView extends AbsWebIndicatorView {
         if (getVisibility() == GONE) {
             setVisibility(VISIBLE);
         }
-        if (progress < 95f) {
+        if (progress < 95F) {
             return;
         }
         if (indicatorStatus != FINISH) {
@@ -189,10 +182,10 @@ public class WebIndicatorView extends AbsWebIndicatorView {
             float p2 = v;
             ValueAnimator animator = ValueAnimator.ofFloat(mCurrentProgress, p1);
             ValueAnimator animator0 = ValueAnimator.ofFloat(p1, p2);
-            float residue = 1f - mCurrentProgress / 100 - 0.05f;
+            float residue = 1f - mCurrentProgress / 100 - 0.05F;
             long duration = (long) (residue * mCurrentMaxUniformSpeedDuration);
-            long duration6 = (long) (duration * 0.6f);
-            long duration4 = (long) (duration * 0.4f);
+            long duration6 = (long) (duration * 0.6F);
+            long duration4 = (long) (duration * 0.4F);
             animator.setInterpolator(new LinearInterpolator());
             animator.setDuration(duration4);
             animator.addUpdateListener(mAnimatorUpdateListener);
@@ -205,16 +198,16 @@ public class WebIndicatorView extends AbsWebIndicatorView {
             this.mAnimator = animatorSet;
         } else {
             ValueAnimator segment95Animator = null;
-            if (mCurrentProgress < 95f) {
+            if (mCurrentProgress < 95F) {
                 segment95Animator = ValueAnimator.ofFloat(mCurrentProgress, 95);
-                float residue = 1f - mCurrentProgress / 100f - 0.05f;
+                float residue = 1f - mCurrentProgress / 100F - 0.05F;
                 segment95Animator.setDuration((long) (residue * mCurrentMaxDecelerateSpeedDuration));
                 segment95Animator.setInterpolator(new DecelerateInterpolator());
                 segment95Animator.addUpdateListener(mAnimatorUpdateListener);
             }
-            ObjectAnimator mObjectAnimator = ObjectAnimator.ofFloat(this, "alpha", 1f, 0f);
+            ObjectAnimator mObjectAnimator = ObjectAnimator.ofFloat(this, "alpha", 1F, 0F);
             mObjectAnimator.setDuration(mCurrentDoEndAnimationDuration);
-            ValueAnimator mValueAnimatorEnd = ValueAnimator.ofFloat(95f, 100f);
+            ValueAnimator mValueAnimatorEnd = ValueAnimator.ofFloat(95F, 100F);
             mValueAnimatorEnd.setDuration(mCurrentDoEndAnimationDuration);
             mValueAnimatorEnd.addUpdateListener(mAnimatorUpdateListener);
             AnimatorSet animatorSet = new AnimatorSet();
@@ -231,16 +224,15 @@ public class WebIndicatorView extends AbsWebIndicatorView {
         indicatorStatus = STARTED;
     }
 
-    private ValueAnimator.AnimatorUpdateListener mAnimatorUpdateListener = new ValueAnimator.AnimatorUpdateListener() {
+    private final ValueAnimator.AnimatorUpdateListener mAnimatorUpdateListener = new ValueAnimator.AnimatorUpdateListener() {
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
-            float t = (float) animation.getAnimatedValue();
-            WebIndicatorView.this.mCurrentProgress = t;
+            WebIndicatorView.this.mCurrentProgress = (float) animation.getAnimatedValue();
             WebIndicatorView.this.invalidate();
         }
     };
 
-    private AnimatorListenerAdapter mAnimatorListenerAdapter = new AnimatorListenerAdapter() {
+    private final AnimatorListenerAdapter mAnimatorListenerAdapter = new AnimatorListenerAdapter() {
         @Override
         public void onAnimationEnd(Animator animation) {
             doEnd();
@@ -258,10 +250,11 @@ public class WebIndicatorView extends AbsWebIndicatorView {
     }
 
     private void doEnd() {
-        if (indicatorStatus == FINISH && mCurrentProgress == 100f) {
+        //noinspection AlibabaUndefineMagicConstant
+        if (indicatorStatus == FINISH && mCurrentProgress == 100.0F) {
             setVisibility(GONE);
-            mCurrentProgress = 0f;
-            this.setAlpha(1f);
+            mCurrentProgress = 0F;
+            this.setAlpha(1F);
         }
         indicatorStatus = UN_START;
     }

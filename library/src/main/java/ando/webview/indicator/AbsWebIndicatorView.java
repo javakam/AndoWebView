@@ -7,14 +7,13 @@ import android.widget.FrameLayout;
 import androidx.annotation.Nullable;
 
 /**
- * Title:AbsWebIndicatorView
- * <p>
- * Description:
- * </p>
+ * # AbsWebIndicatorView
+ *
  * @author javakam
  * @date 2020/8/24 15:43
  */
 public abstract class AbsWebIndicatorView extends FrameLayout implements IWebIndicator {
+
     public AbsWebIndicatorView(Context context) {
         super(context);
     }

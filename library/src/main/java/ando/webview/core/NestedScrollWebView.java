@@ -30,14 +30,12 @@ import androidx.core.view.ViewCompat;
  */
 public class NestedScrollWebView extends WebView implements NestedScrollingChild {
 
-    public static final String TAG = NestedScrollWebView.class.getSimpleName();
-
     private int mLastMotionY;
 
     private final int[] mScrollOffset = new int[2];
     private final int[] mScrollConsumed = new int[2];
 
-    private int mNestedYOffset;
+    private int mNestedOffsetY;
 
     private NestedScrollingChildHelper mChildHelper;
 
@@ -89,12 +87,12 @@ public class NestedScrollWebView extends WebView implements NestedScrollingChild
         final int action = MotionEventCompat.getActionMasked(event);
 
         if (action == MotionEvent.ACTION_DOWN) {
-            mNestedYOffset = 0;
+            mNestedOffsetY = 0;
         }
 
         int y = (int) event.getY();
 
-        event.offsetLocation(0, mNestedYOffset);
+        event.offsetLocation(0, mNestedOffsetY);
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
@@ -108,7 +106,7 @@ public class NestedScrollWebView extends WebView implements NestedScrollingChild
                 if (dispatchNestedPreScroll(0, deltaY, mScrollConsumed, mScrollOffset)) {
                     deltaY -= mScrollConsumed[1];
                     trackedEvent.offsetLocation(0, mScrollOffset[1]);
-                    mNestedYOffset += mScrollOffset[1];
+                    mNestedOffsetY += mScrollOffset[1];
                 }
 
                 mLastMotionY = y - mScrollOffset[1];
@@ -121,7 +119,7 @@ public class NestedScrollWebView extends WebView implements NestedScrollingChild
                 if (dispatchNestedScroll(0, dyConsumed, 0, dyUnconsumed, mScrollOffset)) {
                     mLastMotionY -= mScrollOffset[1];
                     trackedEvent.offsetLocation(0, mScrollOffset[1]);
-                    mNestedYOffset += mScrollOffset[1];
+                    mNestedOffsetY += mScrollOffset[1];
                 }
 
                 result = super.onTouchEvent(trackedEvent);

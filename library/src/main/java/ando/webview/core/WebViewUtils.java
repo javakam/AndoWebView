@@ -50,6 +50,7 @@ public class WebViewUtils {
         initWebView(fragment.getActivity(), webView, indicator);
     }
 
+    @SuppressLint({"ObsoleteSdkInt", "SetJavaScriptEnabled"})
     public static void initWebView(Activity activity, WebView webView, WebIndicatorView indicator) {
         if (activity == null || webView == null || activity.isFinishing()) {
             return;
@@ -60,6 +61,7 @@ public class WebViewUtils {
 
         settings.setSupportZoom(false);
         settings.setBuiltInZoomControls(false);
+        //noinspection deprecation
         settings.setSavePassword(false);
         if (checkNetwork(webView.getContext())) {
             //根据cache-control获取数据。
@@ -87,14 +89,10 @@ public class WebViewUtils {
         settings.setBlockNetworkImage(false);
         // 允许加载本地文件html  file协议
         settings.setAllowFileAccess(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            // 通过 file url 加载的 Javascript 读取其他的本地文件 .建议关闭
-            settings.setAllowFileAccessFromFileURLs(false);
-            // 允许通过 file url 加载的 Javascript 可以访问其他的源，包括其他的文件和 http，https 等其他的源
-            settings.setAllowUniversalAccessFromFileURLs(false);
-        }
+
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //noinspection deprecation
             settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         } else {
             settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
@@ -113,9 +111,11 @@ public class WebViewUtils {
 
         //设置数据库路径  api19 已经废弃,这里只针对 webkit 起作用
         settings.setGeolocationDatabasePath(dir);
+        //noinspection deprecation
         settings.setDatabasePath(dir);
         settings.setAppCachePath(dir);
         //缓存文件最大值
+        //noinspection deprecation
         settings.setAppCacheMaxSize(Long.MAX_VALUE);
 //        mWebSettings.setUserAgentString(mWebSettings
 //                .getUserAgentString()
@@ -134,7 +134,6 @@ public class WebViewUtils {
             }
         }
 
-
         //--------------------
         fixAndroidLollipop(webView);
         //WebViewClient
@@ -148,7 +147,7 @@ public class WebViewUtils {
 
     /**
      * WebView 嵌套在 ScrollView 中崩溃的问题, 关闭硬件加速
-     * <p>
+     *
      * https://my.oschina.net/onlykc/blog/2050590
      */
     private static void fixAndroidLollipop(WebView webView) {
@@ -161,7 +160,7 @@ public class WebViewUtils {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (webView != null && webView.canGoBack()) {
                 webView.goBack();
-                return false;
+                return true;
             }
         }
         if (context instanceof Activity) {
@@ -231,7 +230,7 @@ public class WebViewUtils {
         }
     }
 
-    @SuppressLint("MissingPermission")
+    @SuppressLint({"MissingPermission"})
     private static boolean checkNetwork(Context context) {
         ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivity == null) {

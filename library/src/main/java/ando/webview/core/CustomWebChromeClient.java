@@ -24,12 +24,9 @@ import ando.webview.indicator.WebIndicatorController;
 import static ando.webview.core.ActionActivity.LOCATION;
 
 /**
- * Title: CustomWebChromeClient
- * <p>
- * Description:
- * </p>
+ * # CustomWebChromeClient
  *
- * @author Changbao
+ * @author javakam
  * @date 2020/7/24  10:43
  */
 public class CustomWebChromeClient extends WebChromeClient {
@@ -37,9 +34,9 @@ public class CustomWebChromeClient extends WebChromeClient {
     /**
      * Activity's WeakReference
      */
-    private WeakReference<Activity> mActivityWeakReference;
+    private final WeakReference<Activity> mActivityWeakReference;
 
-    private WebIndicatorController mIndicatorHandler;
+    private final WebIndicatorController mIndicatorHandler;
     /**
      * Web端触发的定位 mOrigin
      */
@@ -90,17 +87,13 @@ public class CustomWebChromeClient extends WebChromeClient {
         }
     }
 
-    private ActionActivity.PermissionListener mPermissionListener = new ActionActivity.PermissionListener() {
+    private final ActionActivity.PermissionListener mPermissionListener = new ActionActivity.PermissionListener() {
         @Override
         public void onRequestPermissionsResult(@NonNull String[] permissions, @NonNull int[] grantResults, Bundle extras) {
             if (extras.getInt(ActionActivity.KEY_FROM_INTENTION) == FROM_CODE_INTENTION_LOCATION) {
                 boolean hasPermission = hasPermission(mActivityWeakReference.get(), permissions);
                 if (mCallback != null) {
-                    if (hasPermission) {
-                        mCallback.invoke(mOrigin, true, false);
-                    } else {
-                        mCallback.invoke(mOrigin, false, false);
-                    }
+                    mCallback.invoke(mOrigin, hasPermission, false);
                     mCallback = null;
                     mOrigin = null;
                 }

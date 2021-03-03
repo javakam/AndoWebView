@@ -1,10 +1,18 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply from: "config.gradle"
+
 buildscript {
-    ext.kotlin_version = "1.4.0"
+    ext.kotlin_version = "1.4.31"
     repositories {
         google()
         jcenter()
-        maven { url 'https://dl.bintray.com/javakam/maven' }
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        maven { url "https://maven.google.com" }
+        maven { url "https://jitpack.io" }
+        maven { url 'https://dl.bintray.com/novoda-oss/snapshots/' }
+        maven { url "https://dl.bintray.com/javakam/AndoLibrary" }
+        maven { url "https://dl.bintray.com/javakam/AndoDialog" }
+        maven { url 'https://dl.bintray.com/javakam/FileOperator' }
     }
     dependencies {
         /*
@@ -12,11 +20,13 @@ buildscript {
         novoda 暂时不支持最新的 4.0
         classpath "com.android.tools.build:gradle:4.0.1"
          */
-        classpath 'com.android.tools.build:gradle:3.6.0'
+        //classpath 'com.android.tools.build:gradle:3.6.0'
+
+        //gradle-wrapper.properties 👉 https://developer.android.com/studio/releases/gradle-plugin#updating-gradle
+        classpath 'com.android.tools.build:gradle:4.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath 'com.github.panpf.bintray-publish:bintray-publish:1.0.0'
     }
 }
 
@@ -24,16 +34,26 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url 'https://dl.bintray.com/javakam/maven' }
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        maven { url "https://maven.google.com" }
+        maven { url "https://jitpack.io" }
+        maven { url 'https://dl.bintray.com/novoda-oss/snapshots/' }
+        maven { url "https://dl.bintray.com/javakam/AndoLibrary" }
+        maven { url "https://dl.bintray.com/javakam/AndoDialog" }
+        maven { url 'https://dl.bintray.com/javakam/FileOperator' }
     }
-
     tasks.withType(Javadoc).all {
         options {
             encoding "UTF-8"
             charSet 'UTF-8'
             links "http://docs.oracle.com/javase/7/docs/api"
         }
-        enabled = false
+        //enabled = false
+    }
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
     }
 }
 

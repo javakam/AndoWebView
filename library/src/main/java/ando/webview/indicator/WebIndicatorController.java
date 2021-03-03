@@ -3,7 +3,7 @@ package ando.webview.indicator;
 import android.webkit.WebView;
 
 public class WebIndicatorController {
-    private IWebIndicator mIWebIndicator;
+    private IWebIndicator indicator;
 
     public void progress(WebView v, int newProgress) {
         if (newProgress == 0) {
@@ -20,26 +20,26 @@ public class WebIndicatorController {
     }
 
     public void reset() {
-        if (mIWebIndicator != null) {
-            mIWebIndicator.reset();
+        if (indicator != null) {
+            indicator.reset();
         }
     }
 
     public void finish() {
-        if (mIWebIndicator != null) {
-            mIWebIndicator.hide();
+        if (indicator != null) {
+            indicator.hide();
         }
     }
 
     public void setProgress(int n) {
-        if (mIWebIndicator != null) {
-            mIWebIndicator.setProgress(n);
+        if (indicator != null) {
+            indicator.setProgress(n);
         }
     }
 
     public void showIndicator() {
-        if (mIWebIndicator != null) {
-            mIWebIndicator.show();
+        if (indicator != null) {
+            indicator.show();
         }
     }
 
@@ -48,7 +48,7 @@ public class WebIndicatorController {
     }
 
     public WebIndicatorController injectIndicator(IWebIndicator indicator) {
-        this.mIWebIndicator = indicator;
+        this.indicator = indicator;
         return this;
     }
 }

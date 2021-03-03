@@ -21,10 +21,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         mWebView = findViewById(R.id.webView)
         mWebViewIndicator = findViewById(R.id.webViewIndicator)
-        mWebViewIndicator.setColor(resources.getColor(R.color.color_web_indicator_blue))
+        @Suppress("DEPRECATION")
+        mWebViewIndicator.setColor(resources.getColor(R.color.color_web_indicator))
 
-        letsGoSimplify()
-        //letsGoCustom()
+        //1.简单使用
+        //letsGoSimplify()
+        //2.自定义
+        letsGoCustom()
     }
 
     //返回键处理

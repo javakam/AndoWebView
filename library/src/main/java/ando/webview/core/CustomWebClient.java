@@ -31,7 +31,7 @@ import java.util.List;
  * Description:
  * </p>
  *
- * @author Changbao
+ * @author javakam
  * @date 2020/7/24  9:42
  */
 public class CustomWebClient extends WebViewClient {
@@ -145,11 +145,6 @@ public class CustomWebClient extends WebViewClient {
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
         return super.shouldInterceptRequest(view, request);
-    }
-
-    @Override
-    public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-        return super.shouldInterceptRequest(view, url);
     }
 
     @Override
