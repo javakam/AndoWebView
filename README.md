@@ -1,4 +1,4 @@
-# AndoWebview
+## AndoWebview
 
 - 🚀 修复了原生`WebView`的一些`Bug`
 - 🚀 `NestedScrollWebView` + 顶部进度显示`Indicator`
@@ -14,7 +14,6 @@ implementation 'ando.webview:webview:2.0.0'
 ```
 
 ### Usage
-#### 1.WebView Basic Usage
 
 -  1. 布局文件中引入(建议动态创建`NestedScrollWebView`) :
 
@@ -74,9 +73,6 @@ override fun onDestroy() {
     mWebView.removeAllViews()
 }
 ```
-#### 2.WebView + Video
-
-#### 3.WebView + CoordinatorLayout
 
 ### `Url` for testing
 ```
