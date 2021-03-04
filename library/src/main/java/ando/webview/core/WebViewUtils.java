@@ -221,13 +221,13 @@ public class WebViewUtils {
     /**
      * <pre>
      *      webView.loadData(newSource, "text/html", "UTF-8");  //中文乱码问题
-     *      val sss =
-     *              "<p><script type='text/javascript' " +
+     *      val html =
+     *              "< p >< script type='text / javascript' " +
      *              "  src='http://vd.zqrb.cn/admin/getvod/getvideo?key=b99dd7e5cfc1dadbb486326c68c8eb42&videoId=098ae9c0336f44f7b0990ea8433f45ff&isRePlay=1&isautoplay=1&id=358'> " +
-     *              "</script></p><p>（策划 XXX音视频中心）</p>"
-     *      mWebView.loadUrl(sss)
+     *              "< / script >< /p >< p >（策划 XXX音视频中心）< /p >"
+     *      mWebView.loadUrl(html)
      *
-     *      mWebView.loadDataWithBaseURL("", sss, "text/html", "UTF-8", null)
+     *      mWebView.loadDataWithBaseURL("", html, "text/html", "UTF-8", null)
      * </pre>
      */
     public static void loadContentWithBaseUrl(WebView webView, String baseUrl, String source) {
