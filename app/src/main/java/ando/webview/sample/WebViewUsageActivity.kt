@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
  * # CoreActivity
  *
  * @author javakam
- * @date 2021/3/3  15:47
+ * 2021/3/3  15:47
  */
 class WebViewUsageActivity : AppCompatActivity() {
 

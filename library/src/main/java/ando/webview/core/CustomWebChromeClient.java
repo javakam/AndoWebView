@@ -27,7 +27,7 @@ import static ando.webview.core.ActionActivity.LOCATION;
  * # CustomWebChromeClient
  *
  * @author javakam
- * @date 2020/7/24  10:43
+ * 2020/7/24  10:43
  */
 public class CustomWebChromeClient extends WebChromeClient {
 

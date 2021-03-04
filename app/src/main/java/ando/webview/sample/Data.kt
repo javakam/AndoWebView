@@ -2,7 +2,7 @@ package ando.webview.sample
 
 /**
  * @author javakam
- * @date 2021/3/3  16:03
+ * 2021/3/3  16:03
  */
 
 const val localHtmlPath="file:///android_asset/js_video/video.html"

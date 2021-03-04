@@ -14,7 +14,7 @@ import androidx.core.app.ActivityCompat;
  * # ActionActivity
  *
  * @author javakam
- * @date 2020/8/24 15:51
+ * 2020/8/24 15:51
  */
 public final class ActionActivity extends Activity {
 

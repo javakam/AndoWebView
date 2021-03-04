@@ -36,7 +36,7 @@ import static androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
  * # WebView Config
  *
  * @author javakam
- * @date 2019-05-20 16:48:25
+ * 2019-05-20 16:48:25
  */
 public class WebViewUtils {
 

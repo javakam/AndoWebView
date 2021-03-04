@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
  * # BaseWebIndicator
  *
  * @author javakam
- * @date 2020/8/24 15:43
+ * 2020/8/24 15:43
  */
 public abstract class BaseWebIndicator extends FrameLayout implements IWebIndicator {
 
