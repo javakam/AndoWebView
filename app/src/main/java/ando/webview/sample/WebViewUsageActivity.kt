@@ -20,7 +20,7 @@ class WebViewUsageActivity : AppCompatActivity() {
 
     private lateinit var mWebViewIndicator: WebIndicator
     private lateinit var mWebView: WebView
-    private val url = "https://fhy.bgy.com.cn/fhyH5/"
+    private val url = adHtml2// adHtml
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
