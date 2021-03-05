@@ -9,7 +9,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.webkit.WebView;
 
-import androidx.core.view.MotionEventCompat;
 import androidx.core.view.NestedScrollingChild;
 import androidx.core.view.NestedScrollingChildHelper;
 import androidx.core.view.ViewCompat;
@@ -61,6 +60,7 @@ public class NestedScrollWebView extends WebView implements NestedScrollingChild
         init();
     }
 
+    @SuppressWarnings("deprecation")
     public NestedScrollWebView(Context context, AttributeSet attrs, int defStyleAttr, boolean privateBrowsing) {
         super(getFixedContext(context), attrs, defStyleAttr, privateBrowsing);
         init();
@@ -84,18 +84,15 @@ public class NestedScrollWebView extends WebView implements NestedScrollingChild
     public boolean onTouchEvent(MotionEvent event) {
         boolean result = false;
 
-        MotionEvent trackedEvent = MotionEvent.obtain(event);
-
-        final int action = MotionEventCompat.getActionMasked(event);
+        final MotionEvent trackedEvent = MotionEvent.obtain(event);
+        final int action = event.getAction();//event.getActionMasked()
 
         if (action == MotionEvent.ACTION_DOWN) {
             mNestedOffsetY = 0;
         }
 
         int y = (int) event.getY();
-
         event.offsetLocation(0, mNestedOffsetY);
-
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 mLastMotionY = y;

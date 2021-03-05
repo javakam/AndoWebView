@@ -17,10 +17,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun fun1(view: View?) {
-        startActivity(Intent(this, WebViewVideoActivity::class.java))
+        startActivity(Intent(this, WebViewScrollViewActivity::class.java))
     }
 
     fun fun2(view: View?) {
+        startActivity(Intent(this, WebViewVideoActivity::class.java))
+    }
+
+
+    fun fun3(view: View?) {
         startActivity(Intent(this, WebViewCoordinatorActivity::class.java))
     }
 }

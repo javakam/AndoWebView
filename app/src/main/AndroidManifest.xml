@@ -43,6 +43,9 @@
             android:name=".WebViewUsageActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".WebViewScrollViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".WebViewVideoActivity"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait" />

@@ -2,37 +2,59 @@ package ando.webview.sample
 
 import ando.webview.core.CustomWebChromeClient
 import ando.webview.core.CustomWebClient
+import ando.webview.core.NestedScrollWebView
 import ando.webview.core.WebViewUtils
 import ando.webview.indicator.WebIndicator
 import ando.webview.indicator.WebIndicatorController
 import android.os.Bundle
 import android.view.KeyEvent
-import android.webkit.WebView
+import android.view.ViewGroup
+import android.view.Window
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.NestedScrollView
 
 /**
- * # WebViewUsageActivity
+ * # WebViewScrollViewActivity
  *
  * @author javakam
  * 2021/3/3  15:47
  */
-class WebViewUsageActivity : AppCompatActivity() {
+class WebViewScrollViewActivity : AppCompatActivity() {
 
+    private lateinit var mScrollView: NestedScrollView
+    private lateinit var mWebViewContainer: FrameLayout
     private lateinit var mWebViewIndicator: WebIndicator
-    private lateinit var mWebView: WebView
+    private lateinit var mWebView: NestedScrollWebView
     private val url = adHtml2// adHtml
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_webview_usage)
-        mWebView = findViewById(R.id.webView)
+        setContentView(R.layout.activity_webview_scrollview)
+
+        mWebViewContainer = findViewById(R.id.container)
+        mScrollView = findViewById(R.id.scrollView)
+
+        //Indicator
         mWebViewIndicator = findViewById(R.id.webViewIndicator)
         @Suppress("DEPRECATION")
         mWebViewIndicator.setColor(resources.getColor(R.color.color_web_indicator))
 
-        //1.简单使用
-        //letsGoSimplify()
-        //2.自定义
+        //WebView
+        mWebView = NestedScrollWebView(this)
+        //mWebView.overScrollMode = View.OVER_SCROLL_NEVER
+        mWebView.layoutParams = FrameLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
+        mWebViewContainer.addView(mWebView)
+
+        //解决滑动冲突 Fix Scroll Conflict
+        //注意: FrameLayout不能加上属性 minHeight 并且 layout_height 必须为 match_parent
+        mScrollView.isFillViewport = true
+        mWebView.isNestedScrollingEnabled = true
+
         letsGoCustom()
     }
 
@@ -45,11 +67,7 @@ class WebViewUsageActivity : AppCompatActivity() {
         super.onDestroy()
         mWebView.clearHistory()
         mWebView.removeAllViews()
-    }
-
-    private fun letsGoSimplify() {
-        WebViewUtils.initWebView(this, mWebView, mWebViewIndicator)
-        mWebView.loadUrl(url)
+        mWebViewContainer.removeView(mWebView)
     }
 
     private fun letsGoCustom() {

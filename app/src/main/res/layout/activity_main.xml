@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="fun1"
-        android:text="WebView Video"
+        android:text="WebView NestedScrollView"
         android:textAllCaps="false"
         android:textAppearance="?android:attr/textAppearance" />
 
@@ -30,6 +30,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="fun2"
+        android:text="WebView Video"
+        android:textAllCaps="false"
+        android:textAppearance="?android:attr/textAppearance" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="fun3"
         android:text="WebView CoordinatorLayout"
         android:textAllCaps="false" />
 
