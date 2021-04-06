@@ -10,9 +10,7 @@
 
 ### Gradle
 ```groovy
-maven { url "https://dl.bintray.com/javakam/maven" }
-
-implementation 'ando.webview:webview:2.0.0'
+implementation 'com.github.javakam:webview:3.0.0@aar'
 ```
 
 ### Usage
